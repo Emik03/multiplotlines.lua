@@ -1,0 +1,12 @@
+{
+    "diagnostics.globals": [
+        "draw",
+        "imgui_style_var",
+        "state",
+        "imgui",
+        "saturate",
+        "imgui_col",
+        "bit32",
+        "lerp"
+    ]
+}

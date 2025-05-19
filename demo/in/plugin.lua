@@ -118,7 +118,6 @@ function draw()
         imgui.SliderInt("HoveredDrawThickness", args.HoveredDrawThickness, 0, 3)
 
     _, args.LegendMaxColumns = imgui.SliderInt("LegendMaxColumns", args.LegendMaxColumns, 1, 32)
-    _, args.FramePadding = imgui.SliderInt("FramePadding", args.FramePadding, 0, 15)
     _, args.HoveredDrawTooltip = imgui.Checkbox("HoveredDrawTooltip", args.HoveredDrawTooltip)
 
     if imgui.GetContentRegionAvailWidth() >= 308 then

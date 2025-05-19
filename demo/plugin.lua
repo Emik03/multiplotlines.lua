@@ -26,7 +26,6 @@
 --- @field PlotMCA MCA[]
 --- @field LegendMCA MCA[]
 --- @field AutoScale boolean
---- @field FramePadding number
 --- @field SnapMouseX boolean
 --- @field TextColor number | nil
 ---
@@ -51,10 +50,8 @@
 --- @field PlotMCA MCA[] | nil
 --- @field LegendMCA MCA[] | nil
 --- @field AutoScale boolean | nil
---- @field FramePadding number | nil
 --- @field SnapMouseX boolean | nil
 --- @field TextColor number | nil
-
 --- Creates a plot with multiple channels.
 --- @generic T
 --- @param label string | number | boolean | nil
@@ -90,7 +87,7 @@ local function MultiPlotLines(
             0xffeecc99, 0xffffeebb, 0xffbbaa66, 0xff55dddd,
             0xff22cccc, 0xffaaeeff, 0xff88aaff, 0xffddccff,
             0xff5599ff, 0xff3355dd, 0xff9955ff, 0xff9988dd,
-            0xff7744aa, 0xffbb66cc, 0xff2222ff, 0xff22ff22
+            0xff7744aa, 0xffbb66cc, 0xff2222ff, 0xff22ff22,
         }
 
         return function(_, channel_idx)
@@ -135,9 +132,8 @@ local function MultiPlotLines(
             PlotMCA = {"SelectChannel", nil, nil},
             LegendMCA = {"SelectChannel", "ToggleChannel", nil},
             AutoScale = true,
-            FramePadding = 4,
             SnapMouseX = true,
-            TextColor = 0xffffffff
+            TextColor = 0xffffffff,
         }
     end
 
@@ -657,7 +653,7 @@ local function MultiPlotLines(
 
     local num_lines = num_values - 1
     local cursor_pos = imgui.GetCursorScreenPos()
-    local padding = params.FramePadding
+    local padding = imgui.GetStyle().FramePadding
     local frame_bb_min_x = cursor_pos[1]
     local frame_bb_min_y = cursor_pos[2]
     local frame_bb_max_x = frame_bb_min_x + width
@@ -774,7 +770,7 @@ local function MultiPlotLines(
                     draw_list.AddCircleFilled(
                         {
                             inner_bb_min_x + inner_bb_width * mouse_t,
-                            inner_bb_min_y + inner_bb_height * (1 - closest_y01)
+                            inner_bb_min_y + inner_bb_height * (1 - closest_y01),
                         },
                         5,
                         gcc_fn(data, hovered_c_idx),
@@ -1033,7 +1029,6 @@ function draw()
         imgui.SliderInt("HoveredDrawThickness", args.HoveredDrawThickness, 0, 3)
 
     _, args.LegendMaxColumns = imgui.SliderInt("LegendMaxColumns", args.LegendMaxColumns, 1, 32)
-    _, args.FramePadding = imgui.SliderInt("FramePadding", args.FramePadding, 0, 15)
     _, args.HoveredDrawTooltip = imgui.Checkbox("HoveredDrawTooltip", args.HoveredDrawTooltip)
 
     if imgui.GetContentRegionAvailWidth() >= 308 then
